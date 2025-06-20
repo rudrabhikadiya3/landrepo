@@ -3,13 +3,16 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
-import { isValidEmail, isValidPassword } from '@/utils'
+import { isValidEmail } from '@/utils'
 import { FormError } from '@/components/ui/error'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { handlelogin } from '@/services/auth'
 
 export default function Login() {
   const [formData, setFormData] = useState({ email: '', password: '' })
   const [errors, setErrors] = useState({ email: '', password: '' })
+  const router = useRouter()
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -32,14 +35,6 @@ export default function Login() {
     if (!formData.password) {
       newErrors.password = 'Password is required'
       isValid = false
-    } else if (!isValidPassword(formData.password)) {
-      newErrors.password = 'Password must be at least 6 characters'
-      isValid = false
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match'
-      isValid = false
     }
 
     setErrors(newErrors)
@@ -48,9 +43,13 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (validate()) {
-      console.log('Form submitted', formData)
+    if (!validate()) return
+    const isValidLogin = handlelogin(formData)
+    if (!isValidLogin) {
+      alert('Invalid email or password')
+      return
     }
+    router.push('/')
   }
 
   return (
@@ -77,7 +76,7 @@ export default function Login() {
               {errors.password && <FormError>{errors.password}</FormError>}
             </div>
 
-            <Button type='submit' className='w-full'>
+            <Button type='submit' className='w-full' onClick={handleSubmit}>
               Login
             </Button>
           </form>

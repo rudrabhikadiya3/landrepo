@@ -5,11 +5,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import { FormError } from '@/components/ui/error'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { handleRegister } from '@/services/auth'
 
 export default function Signup() {
   const [formData, setFormData] = useState({ email: '', password: '', confirmPassword: '' })
   const [errors, setErrors] = useState({ email: '', password: '', confirmPassword: '' })
-
+  const router = useRouter()
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
@@ -47,9 +49,13 @@ export default function Signup() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (validate()) {
-      console.log('Form submitted', formData)
+    if (!validate()) return
+    const isRegistered = handleRegister(formData)
+    if (!isRegistered) {
+      alert('Email is already registered')
+      return
     }
+    router.push('/login')
   }
 
   return (
