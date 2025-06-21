@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { LogOut } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import { getCookie } from 'cookies-next'
 import {
   AlertDialog,
@@ -33,9 +32,7 @@ export default function Header() {
 
           <AlertDialog>
             <AlertDialogTrigger>
-              {/* <Button variant='outline' size='icon' aria-label='Logout' title='Logout'> */}
               <LogOut className='w-5 h-5 text-red-700' />
-              {/* </Button> */}
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
