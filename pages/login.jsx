@@ -8,9 +8,13 @@ import { FormError } from '@/components/ui/error'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { handlelogin } from '@/services/auth'
+import { toast } from 'sonner'
+import { Eye, EyeOff } from 'lucide-react'
 
 export default function Login() {
   const [formData, setFormData] = useState({ email: '', password: '' })
+  const [showPassword, setShowPassword] = useState(false)
+
   const [errors, setErrors] = useState({ email: '', password: '' })
   const router = useRouter()
 
@@ -46,7 +50,7 @@ export default function Login() {
     if (!validate()) return
     const isValidLogin = handlelogin(formData)
     if (!isValidLogin) {
-      alert('Invalid email or password')
+      toast.error('Invalid email or password')
       return
     }
     router.push('/')
@@ -68,11 +72,25 @@ export default function Login() {
               {errors.email && <FormError>{errors.email}</FormError>}
             </div>
 
-            <div>
+            <div className='relative'>
               <Label className='mb-2' htmlFor='password'>
                 Password
               </Label>
-              <Input name='password' id='password' type='password' value={formData.password} onChange={handleChange} placeholder='Enter a password' />
+              <Input
+                name='password'
+                id='password'
+                type={showPassword ? 'text' : 'password'}
+                value={formData.password}
+                onChange={handleChange}
+                placeholder='Enter a password'
+                className='pr-10'
+              />
+              <div
+                className='absolute right-3 top-[30px] cursor-pointer text-gray-500 hover:text-gray-700'
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
+              </div>
               {errors.password && <FormError>{errors.password}</FormError>}
             </div>
 
@@ -82,7 +100,7 @@ export default function Login() {
           </form>
           <p className='text-center text-sm text-gray-600 mt-4'>
             Don't have an account?{' '}
-            <Link href='/signup' className='text-blue-500 underline'>
+            <Link href='/signup' className='text-blue-500 hover:underline'>
               Signup
             </Link>
           </p>
@@ -90,4 +108,17 @@ export default function Login() {
       </Card>
     </div>
   )
+}
+
+export async function getServerSideProps({ req, res }) {
+  const userSession = req.cookies.userSession || null
+  if (!userSession) {
+    return {
+      props: {},
+    }
+  }
+
+  return {
+    redirect: { destination: '/', permanent: false },
+  }
 }

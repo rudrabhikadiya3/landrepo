@@ -73,7 +73,7 @@ export default function FilterBar({ allRecords, onFilter }) {
 
           <Input type='date' value={filters.postDate} onChange={(e) => setFilters({ ...filters, postDate: e.target.value })} />
 
-          <Button onClick={applyFilters} variant='outline' className='w-full md:w-auto'>
+          <Button onClick={applyFilters} className='w-full md:w-auto'>
             Apply Filters
           </Button>
         </div>

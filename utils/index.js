@@ -35,7 +35,7 @@ export function isValidLongitude(lng) {
   return typeof lng === 'number' && lng >= -180 && lng <= 180
 }
 
-export const now = Math.floor(Date.now() / 1000)
+export const now = () => Math.floor(Date.now() / 1000)
 
 export const uniqId = Date.now()
 

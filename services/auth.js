@@ -1,4 +1,6 @@
+import { setCookie } from 'cookies-next/client'
 import { getLocalStorage, setLocalStorage } from '../utils'
+import { deleteCookie } from 'cookies-next'
 
 export const handleRegister = ({ email, password }) => {
   const userData = { email, password }
@@ -7,7 +9,6 @@ export const handleRegister = ({ email, password }) => {
 
   const userExists = existingUsers.some((user) => user.email === email)
   if (userExists) {
-    console.error('User already exists')
     return
   }
 
@@ -22,6 +23,11 @@ export const handlelogin = ({ email, password }) => {
   if (!user) {
     return false
   }
-  setLocalStorage('userSession', { email: user.email })
+  setCookie('userSession', user.email)
+  return true
+}
+
+export const handleLogout = () => {
+  deleteCookie('userSession')
   return true
 }

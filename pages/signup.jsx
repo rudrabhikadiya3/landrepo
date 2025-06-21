@@ -7,10 +7,14 @@ import { FormError } from '@/components/ui/error'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { handleRegister } from '@/services/auth'
+import { toast } from 'sonner'
+import { Eye, EyeOff } from 'lucide-react'
 
 export default function Signup() {
   const [formData, setFormData] = useState({ email: '', password: '', confirmPassword: '' })
   const [errors, setErrors] = useState({ email: '', password: '', confirmPassword: '' })
+  const [showPassword, setShowPassword] = useState({ password: false, confirmPassword: false })
+
   const router = useRouter()
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -52,7 +56,7 @@ export default function Signup() {
     if (!validate()) return
     const isRegistered = handleRegister(formData)
     if (!isRegistered) {
-      alert('Email is already registe')
+      toast.error('Email is already registe')
       return
     }
     router.push('/login')
@@ -74,26 +78,47 @@ export default function Signup() {
               {errors.email && <FormError>{errors.email}</FormError>}
             </div>
 
-            <div>
+            <div className='relative'>
               <Label className='mb-2' htmlFor='password'>
                 Password
               </Label>
-              <Input name='password' id='password' type='password' value={formData.password} onChange={handleChange} placeholder='Enter a password' />
+              <Input
+                name='password'
+                id='password'
+                type={showPassword.password ? 'text' : 'password'}
+                value={formData.password}
+                onChange={handleChange}
+                placeholder='Enter a password'
+              />
+
+              <div
+                className='absolute right-3 top-[30px] cursor-pointer text-gray-500 hover:text-gray-700'
+                onClick={() => setShowPassword({ ...showPassword, password: !showPassword.password })}
+              >
+                {showPassword.password ? <Eye size={18} /> : <EyeOff size={18} />}
+              </div>
               {errors.password && <FormError>{errors.password}</FormError>}
             </div>
 
-            <div>
+            <div className='relative'>
               <Label className='mb-2' htmlFor='confirmPassword'>
                 Confirm Password
               </Label>
               <Input
                 name='confirmPassword'
                 id='confirmPassword'
-                type='password'
+                type={showPassword.confirmPassword ? 'text' : 'password'}
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 placeholder='Enter a confirm password'
               />
+
+              <div
+                className='absolute right-3 top-[30px] cursor-pointer text-gray-500 hover:text-gray-700'
+                onClick={() => setShowPassword({ ...showPassword, confirmPassword: !showPassword.confirmPassword })}
+              >
+                {showPassword.confirmPassword ? <Eye size={18} /> : <EyeOff size={18} />}
+              </div>
               {errors.confirmPassword && <FormError>{errors.confirmPassword}</FormError>}
             </div>
 
@@ -104,7 +129,7 @@ export default function Signup() {
 
           <p className='text-center text-sm text-gray-600 mt-4'>
             Already have an account?{' '}
-            <Link href='/login' className='text-blue-500 underline'>
+            <Link href='/login' className='text-blue-500 hover:underline'>
               Login
             </Link>
           </p>
