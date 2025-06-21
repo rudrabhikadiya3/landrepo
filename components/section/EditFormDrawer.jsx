@@ -12,10 +12,10 @@ import { isValidLatitude, isValidLongitude, setLocalStorage, getLocalStorage, no
 const STATES = states.map((s) => s.state)
 
 export default function EditRecordDrawer({ open, onClose, record, refetch }) {
-  const [formData, setFormData] = useState({ district: '', city: '', locality: '', lat: '', lng: '', plotArea: '' })
+  const [formData, setFormData] = useState({ state: '', city: '', locality: '', lat: '', lng: '', plotArea: '' })
 
-  const getCities = (district) => {
-    const stateData = states.find((state) => state.state === district)
+  const getCities = (_state) => {
+    const stateData = states.find((state) => state.state === _state)
     return stateData ? stateData.districts : []
   }
 
@@ -29,8 +29,8 @@ export default function EditRecordDrawer({ open, onClose, record, refetch }) {
   }
 
   const handleUpdate = () => {
-    const { district, city, locality, lat, lng, plotArea } = formData
-    if (!district || !city || !locality || !lat || !lng || !plotArea) {
+    const { state, city, locality, lat, lng, plotArea } = formData
+    if (!state || !city || !locality || !lat || !lng || !plotArea) {
       alert('Please fill all fields')
       return
     }
@@ -69,9 +69,9 @@ export default function EditRecordDrawer({ open, onClose, record, refetch }) {
         <div className='grid gap-6 mt-2'>
           <div className='flex gap-4'>
             <div className='flex-1'>
-              <Label htmlFor='district'>District</Label>
-              <Select name='district' id='district' onChange={handleChange} value={formData.district}>
-                <option disabled>Select District</option>
+              <Label htmlFor='state'>State</Label>
+              <Select name='state' id='state' onChange={handleChange} value={formData.state}>
+                <option disabled>Select State</option>
                 {STATES.map((state, index) => (
                   <option key={index} value={state}>
                     {state}
@@ -82,9 +82,9 @@ export default function EditRecordDrawer({ open, onClose, record, refetch }) {
 
             <div className='flex-1'>
               <Label htmlFor='city'>City</Label>
-              <Select name='city' id='city' onChange={handleChange} value={formData.city} disabled={!formData.district}>
+              <Select name='city' id='city' onChange={handleChange} value={formData.city} disabled={!formData.state}>
                 <option disabled>Select City</option>
-                {getCities(formData.district).map((city, index) => (
+                {getCities(formData.state).map((city, index) => (
                   <option key={index} value={city}>
                     {city}
                   </option>

@@ -10,11 +10,11 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../ui/dialog'
 const STATES = states.map((state) => state.state)
 
 export default function AddNew({ refetch, open, onClose }) {
-  const [formData, setFormData] = useState({ district: '', city: '', locality: '', lat: '', lng: '', plotArea: '' })
+  const [formData, setFormData] = useState({ state: '', city: '', locality: '', lat: '', lng: '', plotArea: '' })
   const [mounted, setMounted] = useState(false)
 
-  const getCities = (district) => {
-    const stateData = states.find((state) => state.state === district)
+  const getCities = (_state) => {
+    const stateData = states.find((state) => state.state === _state)
     return stateData ? stateData.districts : []
   }
 
@@ -24,8 +24,8 @@ export default function AddNew({ refetch, open, onClose }) {
   }
 
   const handleSubmit = () => {
-    const { district, city, locality, lat, lng, plotArea } = formData
-    if (!district || !city || !locality || !lat || !lng || !plotArea) {
+    const { state, city, locality, lat, lng, plotArea } = formData
+    if (!state || !city || !locality || !lat || !lng || !plotArea) {
       alert('Please fill all fields')
       return
     }
@@ -49,7 +49,7 @@ export default function AddNew({ refetch, open, onClose }) {
     const existingUsers = getLocalStorage('records') || []
     setLocalStorage('records', [...existingUsers, { id: uniqId, ...formData, createdAt: now }])
     refetch()
-    setFormData({ district: '', city: '', locality: '', lat: '', lng: '', plotArea: '' })
+    setFormData({ state: '', city: '', locality: '', lat: '', lng: '', plotArea: '' })
     onClose()
   }
 
@@ -69,12 +69,12 @@ export default function AddNew({ refetch, open, onClose }) {
         <div className='grid gap-6'>
           <div className='flex gap-4'>
             <div className='flex-1'>
-              <Label htmlFor='district' className='mb-2'>
-                District
+              <Label htmlFor='state' className='mb-2'>
+                State
               </Label>
-              <Select name='district' id='district' onChange={handleChange}>
+              <Select name='state' id='state' onChange={handleChange}>
                 <option disabled selected>
-                  Select District
+                  Select State
                 </option>
                 {STATES.map((state, index) => (
                   <option key={index} value={state}>
@@ -88,11 +88,11 @@ export default function AddNew({ refetch, open, onClose }) {
               <Label htmlFor='city' className='mb-2'>
                 City
               </Label>
-              <Select name='city' id='city' onChange={handleChange} disabled={!formData.district}>
+              <Select name='city' id='city' onChange={handleChange} disabled={!formData.state}>
                 <option disabled selected>
                   Select City
                 </option>
-                {getCities(formData.district).map((city, index) => (
+                {getCities(formData.state).map((city, index) => (
                   <option key={index} value={city}>
                     {city}
                   </option>

@@ -5,24 +5,24 @@ import { Input } from '../ui/input'
 import { Select } from '../ui/select'
 
 export default function FilterBar({ allRecords, onFilter }) {
-  const [districts, setDistricts] = useState([])
+  const [states, setStates] = useState([])
   const [filters, setFilters] = useState({
-    district: '',
+    state: '',
     plotAreaMin: '',
     plotAreaMax: '',
     postDate: '',
   })
 
   useEffect(() => {
-    const uniqueDistricts = [...new Set(allRecords.map((item) => item.district))]
-    setDistricts(uniqueDistricts)
+    const uniqueStates = [...new Set(allRecords.map((item) => item.state))]
+    setStates(uniqueStates)
   }, [allRecords])
 
   const applyFilters = () => {
     let result = [...allRecords]
 
-    if (filters.district) {
-      result = result.filter((item) => item.district === filters.district)
+    if (filters.state) {
+      result = result.filter((item) => item.state === filters.state)
     }
 
     if (filters.plotAreaMin || filters.plotAreaMax) {
@@ -47,9 +47,9 @@ export default function FilterBar({ allRecords, onFilter }) {
     <Card className='mb-6 shadow'>
       <CardContent>
         <div className='mb-4 grid gap-4 md:grid-cols-4'>
-          <Select value={filters.district} onChange={(e) => setFilters({ ...filters, district: e.target.value })}>
-            <option value=''>All Districts</option>
-            {districts.map((dist, i) => (
+          <Select value={filters.state} onChange={(e) => setFilters({ ...filters, state: e.target.value })}>
+            <option value=''>All States</option>
+            {states.map((dist, i) => (
               <option key={i} value={dist}>
                 {dist}
               </option>

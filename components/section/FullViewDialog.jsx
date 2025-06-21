@@ -4,7 +4,7 @@ import { MapPin, Building2, Landmark, Ruler } from 'lucide-react'
 export default function FullViewDialog({ open, onClose, record }) {
   if (!record) return null
 
-  const { district, city, locality, plotArea, lat, lng } = record
+  const { state, city, locality, plotArea, lat, lng } = record
 
   const mapUrl = `https://maps.google.com/maps?q=${lat},${lng}&z=10&output=embed`
 
@@ -23,8 +23,8 @@ export default function FullViewDialog({ open, onClose, record }) {
             <div className='flex items-center gap-2'>
               <MapPin className='text-blue-600' size={18} />
               <div>
-                <p className='text-sm text-muted-foreground'>District</p>
-                <p>{district}</p>
+                <p className='text-sm text-muted-foreground'>State</p>
+                <p>{state}</p>
               </div>
             </div>
             <div className='flex items-center gap-2'>

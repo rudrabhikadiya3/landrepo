@@ -54,7 +54,7 @@ export default function Home() {
         <NoRecords />
       ) : (
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
-          {filteredItems.map(({ district, city, locality, plotArea, lat, lng, createdAt, id }, index) => (
+          {filteredItems.map(({ state, city, locality, plotArea, lat, lng, createdAt, id }, index) => (
             <Card key={index} className='shadow-lg pb-0'>
               <CardContent className='grid gap-4 text-left px-4'>
                 <div className='flex justify-between items-start'>
@@ -62,8 +62,8 @@ export default function Home() {
                     <div className='flex items-center gap-3'>
                       <MapPin className='text-blue-600' size={20} />
                       <div>
-                        <p className='text-sm text-muted-foreground'>District</p>
-                        <p className='font-medium'>{district}</p>
+                        <p className='text-sm text-muted-foreground'>State</p>
+                        <p className='font-medium'>{state}</p>
                       </div>
                     </div>
 
@@ -111,7 +111,7 @@ export default function Home() {
                   variant='ghost'
                   size='icon'
                   className='text-muted-foreground hover:text-blue-600 rounded-none w-1/3 h-12 border-x-0'
-                  onClick={() => handleEditClick({ district, city, locality, plotArea, lat, lng, createdAt, id })}
+                  onClick={() => handleEditClick({ state, city, locality, plotArea, lat, lng, createdAt, id })}
                 >
                   <Pencil size={18} />
                 </Button>
@@ -120,7 +120,7 @@ export default function Home() {
                   size='icon'
                   className='text-muted-foreground hover:text-blue-600 rounded-s-none rounded-t-none w-1/3 h-12 border-s-0'
                   onClick={() => {
-                    setSelectedRecord({ district, city, locality, plotArea, lat, lng, createdAt, id })
+                    setSelectedRecord({ state, city, locality, plotArea, lat, lng, createdAt, id })
                     setViewDialogOpen(true)
                   }}
                 >
