@@ -52,7 +52,7 @@ export default function Signup() {
     if (!validate()) return
     const isRegistered = handleRegister(formData)
     if (!isRegistered) {
-      alert('Email is already registered')
+      alert('Email is already registe')
       return
     }
     router.push('/login')
