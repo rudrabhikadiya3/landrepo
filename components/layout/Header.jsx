@@ -38,7 +38,7 @@ export default function Header() {
               <AlertDialogHeader>
                 <AlertDialogTitle>Are you sure?</AlertDialogTitle>
                 <AlertDialogDescription>
-                  This action cannot be undone. This will permanently delete your account and remove your data from our servers.
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Explicabo repudiandae fugiat earum?
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
