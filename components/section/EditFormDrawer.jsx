@@ -143,7 +143,7 @@ export default function EditRecordDrawer({ open, onClose, record, refetch }) {
             <Button className='w-full' type='submit'>
               Update
             </Button>
-            <Button variant='outline' className='w-full' onClick={onClose}>
+            <Button variant='outline' type='button' className='w-full' onClick={onClose}>
               Cancel
             </Button>
           </div>
