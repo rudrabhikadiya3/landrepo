@@ -61,7 +61,7 @@ export default function AddNew({ refetch, open, onClose }) {
     }
 
     const existingUsers = getLocalStorage('records') || []
-    setLocalStorage('records', [...existingUsers, { id: uniqId, ...formData, createdAt: now() }])
+    setLocalStorage('records', [...existingUsers, { id: uniqId(), ...formData, createdAt: now() }])
     refetch()
     setFormData({ state: '', city: '', locality: '', lat: '', lng: '', plotArea: '' })
     onClose()

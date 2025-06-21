@@ -37,7 +37,7 @@ export function isValidLongitude(lng) {
 
 export const now = () => Math.floor(Date.now() / 1000)
 
-export const uniqId = Date.now()
+export const uniqId = () => Date.now()
 
 export function getRelativeTime(timestamp) {
   return moment.unix(timestamp).fromNow()
